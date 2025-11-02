@@ -1,69 +1,69 @@
-### Docker Networks
+# Docker Networks
 
-* Docker networks are primarily used to establish communication between Docker containers and the outside world via the host machine.
+Docker networks allow communication between Docker containers and the outside world via the host machine. They also provide isolation and segmentation for containers to ensure secure communication.
 
-* Docker networks are used to provide complete isolation for docker containers
+---
 
-### Docker Network Drivers
+## Docker Network Drivers
 
-#### Bridge Driver
+### 1. Bridge Driver
 
-![](https://miro.medium.com/v2/resize:fit:720/format:webp/0*VDNvPBLuTnXc9cZF.png)
+![Bridge Driver](https://miro.medium.com/v2/resize:fit:720/format:webp/0*VDNvPBLuTnXc9cZF.png)
 
-* It is a private default network created on a host
+- The **Bridge** network is the default private network created on a host.  
+- Containers connected to this network get internal IPs and can communicate with each other.
 
-* When containers are created through this network, they will receive an internal IP address through which they can communicate with each other
+---
 
-#### Host Driver
+### 2. Host Driver
 
-![](https://miro.medium.com/v2/resize:fit:720/format:webp/0*JwZ2n9HIbDncu2-2.png)
+![Host Driver](https://miro.medium.com/v2/resize:fit:720/format:webp/0*JwZ2n9HIbDncu2-2.png)
 
-* This driver will help you in creating a public network for your docker container.
+- The **Host** driver allows containers to share the host’s network stack.  
+- Containers use the host’s IP address and ports to run services.
 
-* The container will use the host machine's IP address and port to run services within a container.
+---
 
-#### Overlay Driver
+### 3. Overlay Driver
 
-![](https://miro.medium.com/v2/resize:fit:640/format:webp/0*1xmsjESIUD4wGe32.png)
+![Overlay Driver](https://miro.medium.com/v2/resize:fit:640/format:webp/0*1xmsjESIUD4wGe32.png)
 
-* Overlay driver allows containers across the host to communicate with each other without worrying about the setup
+- The **Overlay** driver enables communication between containers across multiple Docker hosts.  
+- Commonly used in **Docker Swarm** or **Kubernetes** setups for multi-host networking.
 
-* It is useful for multi-host network communication such as Docker Swarm and Kubernetes
+---
 
-#### Macvlan Driver
+### 4. Macvlan Driver
 
-![](https://miro.medium.com/v2/resize:fit:720/format:webp/0*LRqQVdswEDKMp5p8.png)
+![Macvlan Driver](https://miro.medium.com/v2/resize:fit:720/format:webp/0*LRqQVdswEDKMp5p8.png)
 
-* Macvlan driver allows you to assign a **MAC** address to a container, making it appear as a physical device on your network.
+- The **Macvlan** driver assigns a unique **MAC address** to a container, making it appear as a physical device on the network.  
+- Ideal for scenarios requiring containers to directly communicate with the physical network.
 
-* It is suitable when a user wants to directly connect the container to the physical network rather than the Docker host.
+---
 
-#### None Driver
+### 5. None Driver
 
-![](https://miro.medium.com/v2/resize:fit:600/format:webp/0*TTU1P5TmtIVUYQVG.png)
+![None Driver](https://miro.medium.com/v2/resize:fit:600/format:webp/0*TTU1P5TmtIVUYQVG.png)
 
-* In this kind of network, containers are not attached to any network which means containers will not be able to communicate with the host machine or with each other.
+- The **None** driver disables networking entirely.  
+- Containers on this network cannot communicate with the host or other containers.  
+- Useful when isolation is critical.
 
-* This network is used when you want to completely disable networking on a container
+---
 
-### Basic Docker Network Commands
+## Basic Docker Network Commands
 
-#### List down the networks associated with the Docker
+| Command | Description |
+|----------|--------------|
+| `docker network ls` | Lists all available Docker networks |
+| `docker network create <network-name>` | Creates a new Docker network |
+| `docker network disconnect <network-name> <container-name-or-id>` | Disconnects a container from a network |
+| `docker network inspect <network-name>` | Displays detailed information about a specific network |
+| `docker network prune` | Removes all unused networks |
 
-`docker network ls`
+---
 
-#### Creating a network
+### ✅ Summary
 
-`docker network create <network-name>`
-
-#### Disconnecting a container from the network
-
-`docker network disconnect <network-name> <container-name-or-id>`
-
-#### Display detailed information about a network
-
-`docker network inspect <network-name`
-
-#### Remove all unused networks
-
-`docker network prune`
+Docker networks are essential for managing communication and isolation between containers. Understanding the network drivers helps in designing efficient and secure containerized environments.
