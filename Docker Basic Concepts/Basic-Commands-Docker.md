@@ -1,145 +1,149 @@
-### Docker Images
+# Docker Commands Reference Guide
 
-#### General Commands
+A comprehensive and professional reference for essential Docker commands used in image management, container lifecycle, networking, and volume handling.
 
-`docker version` : Displays detailed information about your Docker CLI and daemon versions
+---
 
-`docker system info` : Lists data about your Docker environment
+## 🧩 General Commands
 
-`docker help` : View the help index, a reference of all the supported commands
+| Command | Description |
+|----------|-------------|
+| `docker version` | Display detailed information about Docker CLI and daemon versions |
+| `docker system info` | List data about your Docker environment |
+| `docker help` | View the help index for all supported commands |
+| `docker <command> --help` | View detailed information about a specific command and its flags |
 
-`docker <command> --help` : View the help information about a particular command including detailed information on the support option flags
+---
 
+## 🏗️ Build Images
 
-#### Build Images
+| Command | Description |
+|----------|-------------|
+| `docker build .` | Build the Dockerfile in the working directory into a new image |
+| `docker build -t <tag-name> .` | Build and tag the resulting image (e.g., `example-image:latest`) |
+| `docker build -f docker/app-dockerfile .` | Build the Dockerfile located at a custom path |
+| `docker build --build-arg foo=bar .` | Set build-time variables using build arguments |
+| `docker build --pull .` | Pull updated base images before building |
+| `docker build --quiet .` | Suppress build output, showing only the final image ID |
 
-`docker build .` : Build the dockerfile in your working directory into a new image
+---
 
-`docker build -t <tag-name> .` : Build the dockerfile in your working directory and tag the resulting image as "example-image:latest"
+## 🚀 Run Containers
 
-`docker build -f docker/app-dockerfile` : Build the dockerfile at the "docker/app-dockerfile" path
+| Command | Description |
+|----------|-------------|
+| `docker run ubuntu:latest` | Run a new container using the Ubuntu image |
+| `docker run ubuntu:latest time` | Run a container and execute a command |
+| `docker run --rm ubuntu:latest` | Automatically remove the container upon exit |
+| `docker run -d ubuntu:latest` | Run the container in detached mode |
+| `docker run -it ubuntu:latest` | Attach an interactive terminal session |
+| `docker run -p 8080:80 ubuntu:latest` | Map host port 8080 to container port 80 |
+| `docker run -v /host-dir:/container-dir ubuntu:latest` | Mount a host directory inside the container |
+| `docker run -v data:/data ubuntu:latest` | Mount a named Docker volume |
+| `docker run --network my-network ubuntu:latest` | Connect the container to a specific Docker network |
 
-`docker build --build-arg foo=bar .` : Build an image and set the "foo" build argument
+---
 
-`docker build --pull .` : Instructs docker to pull updated versions of images referenced in FROM instructions in your Dockerfile, before building your new image
+## 🧠 Manage Containers
 
-`docker build --quiet .` : Build an image without emitting any output during the build. The image ID will still be emitted to the terminal when the build completes.
+| Command | Description |
+|----------|-------------|
+| `docker ps` | List all running containers |
+| `docker ps -a` | List all containers, including stopped ones |
+| `docker inspect <container>` | Display detailed container information in JSON |
+| `docker kill <container>` | Forcefully stop a running container |
+| `docker pause <container>` | Pause container processes |
+| `docker unpause <container>` | Resume paused container processes |
+| `docker stop <container>` | Gracefully stop a running container |
+| `docker start <container>` | Start a stopped container |
+| `docker rm <container>` | Remove a container (use `-f` for force removal) |
 
-#### Run Containers
+---
 
-`docker run ubunut:latest` : Runs a new container using the Ubuntu image
+## 📂 Copy Files Between Host and Container
 
-`docker run ubuntu:latest time` : Runs a new container with an argument which will be appended to the ENTRYPOINT instruction
+| Command | Description |
+|----------|-------------|
+| `docker cp example.txt <container>:/data` | Copy a file from host to container |
+| `docker cp <container>:/data/example.txt .` | Copy a file from container to host |
 
-`docker run --rm ubuntu:latest` : Removes the container when it exits
+---
 
-`docker run -d ubuntu:latest` : Runs the container in a detached or background mode
+## ⚙️ Execute Commands Inside Containers
 
-`docker run -it ubuntu:latest` : Attaches TTY to the container. Use this if you wish to run interactive commands in the container
+| Command | Description |
+|----------|-------------|
+| `docker exec my-container demo-command` | Run a command inside a running container |
+| `docker exec -it my-container bash` | Start an interactive shell session inside a container |
 
-`docker run -p 8080:80` : This commmand is used to bind the port "8080" on docker host to port "80" on container
+---
 
-`docker run -v /host-directory:/container-directory ubuntu:latest` : This command will bind mount host directory to the container directory inside the container
+## 🧾 Access Container Logs
 
-`docker run -v data:/data ubuntu:latest` : Mount the named volume data to the "/data" directory inside the container
+| Command | Description |
+|----------|-------------|
+| `docker logs <container>` | View logs generated by a container |
+| `docker logs <container> --follow` | Stream real-time logs |
+| `docker logs <container> -n 10` | Display the last 10 log entries |
 
-`docker run --network my-network ubuntu:latest` : Connect the new container to the Docker network called "my-network"
+---
 
-#### Manage Containers
+## 🧱 Manage Images
 
-`docker ps` : List all the containers running on your host
+| Command | Description |
+|----------|-------------|
+| `docker images` | List all stored Docker images |
+| `docker rmi <image>` | Remove a Docker image |
+| `docker tag <image> <new-tag>` | Assign a new tag to an existing image |
 
-`docker ps -a` : List all the containers running on the host even the stopped ones
+---
 
-`docker inspect <container>`: Obtain all the information Docker has about a container in JSON format
+## ☁️ Push and Pull Images
 
-`docker kill <container>` : Kill the processes running within the container
+| Command | Description |
+|----------|-------------|
+| `docker push example.com/user/image:latest` | Push an image to a remote registry |
+| `docker pull example.com/user/image:latest` | Pull an image from a remote registry |
 
-`docker pause <container>` : Pause the process running within a container
+---
 
-`docker unpause <container>` : Unpause the process running within a container
+## 🌐 Manage Docker Networks
 
-`docker stop <container>` : Stop the container
+| Command | Description |
+|----------|-------------|
+| `docker network create <network>` | Create a new network (bridge driver by default) |
+| `docker network create -d host <network>` | Create a network using the host driver |
+| `docker network connect <network> <container>` | Connect a container to a network |
+| `docker network disconnect <network> <container>` | Disconnect a container from a network |
+| `docker network ls` | List all Docker networks |
+| `docker network rm <network>` | Remove a network (only if no containers are connected) |
 
-`docker start <container>` : Start the container
+---
 
-`docker rm <container>` : Remove the container. Use "-f" flag to remove container which is running
+## 💾 Manage Docker Volumes
 
-#### Copy To and From Containers
+| Command | Description |
+|----------|-------------|
+| `docker volume create <volume>` | Create a named Docker volume |
+| `docker volume ls` | List all Docker volumes |
+| `docker volume rm <volume>` | Remove a Docker volume (must not be in use) |
 
-The "docker cp" command facilitates bi-directional copying between containers and your host machine
+---
 
-`docker cp example.text <container-name>:/data` : Copies file from host system to container
+## 🧰 Scan for Vulnerabilities
 
-`docker cp my-container:/data/example.txt` : Copies file from container to host system
+| Command | Description |
+|----------|-------------|
+| `docker scan example-image:latest` | Scan a Docker image for vulnerabilities |
+| `docker scan example-image:latest --file Dockerfile` | Include Dockerfile context for detailed results |
+| `docker scan example-image:latest --severity high` | Report only high or critical severity vulnerabilities |
 
+---
 
-#### Execute Commands in Containers
+## 🔐 Docker Hub Authentication
 
-The "docker exec" command allows you to run a new process inside a currently running container.
-
-`docker exec my-container demo-command` : This will run the "demo-command" inside the container
-
-`docker exec -it my-container` : This will attach TTY to your container which will allow you to run commands interactively
-
-
-#### Access Container Logs
-
-`docker logs <container>` : This will give you the logs generated by the container on your terminal screen
-
-`docker logs <container> --follow` : This will give you the existing logs on the screen as well as new logs will be streamed and outputted to the terminal screen
-
-`docker logs <container> -n 10` : This will give you the last 10 logs of the container
-
-
-#### Manage Images
-
-`docker images` : List all stored images
-
-`docker rmi <image-name>` : This will remove the image
-
-`docker tage <image-name> <tag-name>` : Add a new tag to an existing image
-
-#### Pull and Push Images
-
-`docker push example.com/user/image:latest` : Push an image from the host machine to the remote registry
-
-`docker pull example.com/user/image:latest` : Pull an image from the remote registry to the host machine
-
-#### Manage Networks
-
-`docker create network <network-name>` : This will create a new network which will default to bridge driver
-
-`docker create network <network-name> -d host` : This will create a new network with a host driver
-
-`docker network connect <network-name> <container>` : This will connect the container to a network
-
-`docker network disconnect <network-name> <container>` : This will disconnect the container from a network
-
-`docker network ls` : This will list all the docker networks available
-
-`docker network rm <network-name>` : This will remove the network. This is only possible if there are no containers connected to this network.
-
-#### Manage Volumes
-
-`docker volume create <volume-name>` : This will create a docker named volume
-
-`docker volume ls` : List the volumes present on your host machine
-
-`docker volume rm` : This will delete a volume and also destroy data within it. The volume should not be associated with any container.
-
-#### Scan for Vulnerabilities
-
-`docker scan example-image:latest` : Scan for vulnerabilities in the image
-
-`docker scan example-image:latest --file Dockerfile` : The --file argument supplies the path to the Dockerfile that was used to build the image. When the Dockerfile is available, more detailed vulnerability information is produced
-
-`docker scan example-image:latest --severity high` : Only report vulnerabilities that are "high" or higher
-
-#### Docker Hub Account
-
-`docker login` : Login to your account. This is a pre-requisite before pushing images. Also, this will help you avoid public pull rate limits
-
-`docker logout` : Logout of your account
-
-`docker search <image-name>` : This will search for the image in Docker Hub
+| Command | Description |
+|----------|-------------|
+| `docker login` | Log in to Docker Hub |
+| `docker logout` | Log out of Docker Hub |
+| `docker search <image>` | Search for an image on Docker Hub |
