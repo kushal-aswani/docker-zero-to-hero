@@ -1,42 +1,89 @@
-### Installing Docker on Linux
+# Installing Docker on Linux
+
 ---
 
-#### Step 1: Update System Packages
+## Step 1: Update System Packages
 
-Start by updating your system's package list to ensure everything is up-to-date.
+Before installing Docker, ensure your system is up to date to avoid conflicts or missing dependencies.
 
-`sudo apt update && sudo apt upgrade -y`
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-#### Step 2: Install Dependencies
+---
 
-Install the required dependencies to allow your system to fetch packages from Docker's official repository.
+## Step 2: Install Dependencies
 
-`bash sudo apt install -y ca-certificates curl gnupg`
+Install the essential dependencies required for Docker to work correctly and securely fetch packages from Docker’s official repository.
 
-#### Step 3: Add Docker's GPG Key and Repository
+```bash
+sudo apt install -y ca-certificates curl gnupg
+```
 
-Run the below commands to add Docker's official GPG key and the Docker repository to your system.
+---
 
-`curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
-`echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
+## Step 3: Add Docker’s GPG Key and Repository
 
-#### Step 4: Install Docker
+Add Docker’s official GPG key and set up the stable repository for your Linux distribution.
 
-Now, install docker using the apt package manager.
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
 
-`sudo apt update`
-`sudo apt install -y docker-ce docker-ce-cli containerd.io`
+Then add the repository:
 
-#### Step 5: Add User to Docker Group
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
 
-To run Docker commands without sudo, you need to add your user to the Docker group.
+---
 
-`sudo usermod -aG docker $USER`
+## Step 4: Install Docker
 
-**Important:** After running this command, log out and log back in to apply the changes.
+Update the package index and install Docker Engine, CLI, and container runtime.
 
-#### Step 6: Start Docker on Boot
+```bash
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+```
 
-Use the below command to start docker on boot.
+---
 
-`sudo systemctl enable docker`
+## Step 5: Add User to the Docker Group
+
+To execute Docker commands without using `sudo`, add your user to the Docker group.
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+**⚠️ Important:** You must log out and log back in (or restart your terminal session) for the changes to take effect.
+
+---
+
+## Step 6: Enable Docker to Start on Boot
+
+Ensure Docker starts automatically when your system boots.
+
+```bash
+sudo systemctl enable docker
+```
+
+To start Docker immediately without rebooting:
+
+```bash
+sudo systemctl start docker
+```
+
+---
+
+## Step 7: Verify Docker Installation
+
+Check if Docker is installed and running properly.
+
+```bash
+docker --version
+docker run hello-world
+```
+
+If the “hello-world” container runs successfully, Docker is correctly installed and ready for use. 🎉
