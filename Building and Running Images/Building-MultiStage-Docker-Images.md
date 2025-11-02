@@ -4,7 +4,7 @@ In this tutorial, we will be creating a multi stage docker image for a MERN appl
 
 **🚀 Step 1:** Clone the MERN application
 
-`git clone <url>`
+`git clone https://github.com/kushal-aswani/mern-todo-app`
 
 **🎨 Step 2:** Create a dockerfile for the frontend. Make sure you have navigated to the frontend directory
 
